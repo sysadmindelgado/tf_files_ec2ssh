@@ -30,6 +30,10 @@ git clone https://github.com/sysadmindelgado/tf_files_ec2ssh.git
 cd tf_files_ec2ssh
 vi pubkey.pub
 
+## (Optional step) if you don't have an existing key then let us create one now. Terraform will pass it to your EC2.
+ssh-keygen -t rsa -f ~/newkey
+cp ~/newkey.pub pubkey.pub
+
 ## Run terraform plan to see what terraform is going to do
 terraform plan
 
@@ -42,6 +46,7 @@ terraform show |grep public_ip
 
 ## SSH into your new ec2 to confirm that it is up and running and accepting SSH connections from you
 ssh ec2-user@ip-address -i yourprivatekey.pem
+NOTE: If you created your key using the optional step above then your private key will be ~/newkey, therefore you would run ssh ec2-user@ip-address -i ~/newkey
 
 ## When you are done run terraform destroy to tear down the plan
 terraform destroy
